@@ -71,7 +71,6 @@ func main() {
 			}
 			lastDigit = d
 		}
-		log.Printf("replaced: %q: %d", s, firstDigit+lastDigit)
 		sum += firstDigit + lastDigit
 	}
 	log.Printf("result: %d", sum)

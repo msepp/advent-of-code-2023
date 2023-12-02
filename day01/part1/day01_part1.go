@@ -26,7 +26,6 @@ func main() {
 				firstDigit = d * 10
 			}
 			lastDigit = d
-			log.Printf("replaced: %q: %d", s, firstDigit+lastDigit)
 		}
 		sum += firstDigit + lastDigit
 	}

@@ -6,12 +6,16 @@ import (
 	"os"
 	"strconv"
 	"strings"
-
-	"github.com/msepp/advent-of-code-2023/day02"
 )
 
+type diceInHand struct {
+	red   int
+	green int
+	blue  int
+}
+
 func main() {
-	limits := day02.DiceInHand{Red: 12, Green: 13, Blue: 14}
+	limits := diceInHand{red: 12, green: 13, blue: 14}
 	file, err := os.Open("day02/input.txt")
 	if err != nil {
 		log.Fatal(err)
@@ -32,12 +36,29 @@ func main() {
 	log.Printf("Result: %d", sum)
 }
 
-func validateGame(grabs []string, limit day02.DiceInHand) bool {
+func validateGame(grabs []string, limit diceInHand) bool {
 	for _, colors := range grabs {
-		hand := day02.ParseDiceInHand(strings.Split(colors, ", "))
-		if hand.Red > limit.Red || hand.Green > limit.Green || hand.Blue > limit.Blue {
+		hand := parseDiceInHand(strings.Split(colors, ", "))
+		if hand.red > limit.red || hand.green > limit.green || hand.blue > limit.blue {
 			return false
 		}
 	}
 	return true
+}
+
+func parseDiceInHand(colors []string) diceInHand {
+	var res diceInHand
+	for _, set := range colors {
+		value := strings.Split(set, " ")
+		count, _ := strconv.Atoi(value[0])
+		switch value[1] {
+		case "red":
+			res.red = count
+		case "green":
+			res.green = count
+		case "blue":
+			res.blue = count
+		}
+	}
+	return res
 }

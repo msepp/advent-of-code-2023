@@ -4,10 +4,15 @@ import (
 	"bufio"
 	"log"
 	"os"
+	"strconv"
 	"strings"
-
-	"github.com/msepp/advent-of-code-2023/day02"
 )
+
+type diceInHand struct {
+	red   int
+	green int
+	blue  int
+}
 
 func main() {
 	file, err := os.Open("day02/input.txt")
@@ -20,24 +25,41 @@ func main() {
 		s := scanner.Text()
 		pcs := strings.Split(s[5:], ": ")
 		res := findMinimumDice(strings.Split(pcs[1], "; "))
-		sum += res.Blue * res.Green * res.Red
+		sum += res.blue * res.green * res.red
 	}
 	log.Printf("Result: %d", sum)
 }
 
-func findMinimumDice(grabs []string) day02.DiceInHand {
-	smallest := day02.DiceInHand{Red: 0, Green: 0, Blue: 0}
+func findMinimumDice(grabs []string) diceInHand {
+	smallest := diceInHand{red: 0, green: 0, blue: 0}
 	for _, colors := range grabs {
-		grabbed := day02.ParseDiceInHand(strings.Split(colors, ", "))
-		if grabbed.Red > smallest.Red {
-			smallest.Red = grabbed.Red
+		grabbed := parseDiceInHand(strings.Split(colors, ", "))
+		if grabbed.red > smallest.red {
+			smallest.red = grabbed.red
 		}
-		if grabbed.Green > smallest.Green {
-			smallest.Green = grabbed.Green
+		if grabbed.green > smallest.green {
+			smallest.green = grabbed.green
 		}
-		if grabbed.Blue > smallest.Blue {
-			smallest.Blue = grabbed.Blue
+		if grabbed.blue > smallest.blue {
+			smallest.blue = grabbed.blue
 		}
 	}
 	return smallest
+}
+
+func parseDiceInHand(colors []string) diceInHand {
+	var res diceInHand
+	for _, set := range colors {
+		value := strings.Split(set, " ")
+		count, _ := strconv.Atoi(value[0])
+		switch value[1] {
+		case "red":
+			res.red = count
+		case "green":
+			res.green = count
+		case "blue":
+			res.blue = count
+		}
+	}
+	return res
 }

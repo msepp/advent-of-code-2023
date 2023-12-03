@@ -134,19 +134,19 @@ func main() {
 			currentPart.mask.set(pos)
 			currentPart.value = append(currentPart.value, r)
 		}
-		// record all gearsByLine
+		// record all new gears per line
 		gearsByLine = append(gearsByLine, lineGears)
 		// move state forward as line is processed, current line is the next line
 		// for previous candidates.
 		lineState[0], lineState[1], lineState[2] = lineState[1], lineState[2], currentLine
-		// collect all partsByLine
+		// collect all new parts per line
 		partsByLine = append(partsByLine, collectMatches(lineState, candidates))
-		// new partsByLine become the next set of candidates
+		// new parts become the next set of candidates
 		candidates = newParts
 	}
 	// move the state forward again to be able to check previous candidates.
 	lineState[0], lineState[1], lineState[2] = lineState[1], lineState[2], currentLine
-	// collect all partsByLine from last line as well
+	// collect all parts from last line as well
 	partsByLine = append(partsByLine, collectMatches(lineState, candidates))
 	// must shift the parts by one to get rid of first empty row (due to deferred
 	// processing)

@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -43,10 +42,6 @@ func (m *mask192) set(pos int) {
 		pos = pos - 128
 		m.high = m.high | (1 << (63 - pos))
 	}
-}
-
-func (m *mask192) String() string {
-	return fmt.Sprintf("%064b%064b%064b\n", m.low, m.mid, m.high)[:140]
 }
 
 func isSymbol(r rune) bool {

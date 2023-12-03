@@ -151,9 +151,9 @@ func main() {
 	// must shift the parts by one to get rid of first empty row (due to deferred
 	// processing)
 	partsByLine = partsByLine[1:]
-	// Now have parts per line, we can find the gears per line and see if there's
-	// partsByLine on previous, current and next line that match. If there's exactly two,
-	// keep the gear part sum.
+	// What's left is going through each line and for each gear check if there's
+	// exactly two matching parts on same or adjacent rows and when a valid gear
+	// is found, add the gear ratio to sum.
 	sum := 0
 	for lineNo, lineGears := range gearsByLine {
 		for _, gear := range lineGears {
